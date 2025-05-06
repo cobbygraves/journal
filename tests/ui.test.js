@@ -1,4 +1,4 @@
-const { describe } = require("node:test");
+import { describe } from "node:test";
 
 describe("body contains h3", () => {
     function mockDOM(){

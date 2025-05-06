@@ -19,7 +19,7 @@
           <ion-icon name="search-outline"></ion-icon>
         </button>
       </div>
-      <div class="filter">
+      <div class="filter" id="filter">
         <div class="filter-container">
           <div class="filter-item">
             <input type="radio" name="filter" id="all" value="all" checked />
@@ -44,12 +44,14 @@
             <label for="motivated">Motivated</label>
           </div>
         </div>
-        <button class="add-journal">
+        <button class="add-journal" id="add-journal">
           Add<ion-icon name="add-outline"></ion-icon>
         </button>
       </div>
     </header>
-    <main></main>
+    <main>
+      <div class="journal-container" id="journal-container"></div>
+    </main>
     <!-- Add Journal Modal -->
     <div id="add-journal-modal" class="modal">
       <div class="modal-content">
@@ -60,11 +62,15 @@
         <form>
           <div class="form-group">
             <label for="journal-title">Title</label>
-            <input type="text" id="journal-title" class="journal-inputs"/>
+            <input type="text" id="journal-title" class="journal-inputs" />
           </div>
           <div class="form-group">
             <label for="journal-content">Content</label>
-            <textarea id="journal-content" rows="4"  class="journal-inputs"></textarea>
+            <textarea
+              id="journal-content"
+              rows="4"
+              class="journal-inputs"
+            ></textarea>
           </div>
           <div class="form-group">
             <label for="mood">Mood:</label>
@@ -76,52 +82,59 @@
           </div>
           <div class="form-group">
             <label for="journal-date">Date:</label>
-            <input type="date" id="journal-date" class="journal-inputs"/>
+            <input type="date" id="journal-date" class="journal-inputs" />
           </div>
 
           <div class="journal-btn-div">
-            <button type="submit" class="add-journal-btn">Add Journal</button>
+            <button type="submit" class="add-journal-btn" id="add-journal-btn">Add Journal</button>
           </div>
         </form>
       </div>
     </div>
 
-     <!-- Edit Journal Modal -->
-     <div id="edit-journal-modal" class="modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2>Edit Journal</h2>
-            <span id="close-edit-modal">&times;</span>
-          </div>
-          <form>
-            <div class="form-group">
-              <label for="journal-title">Title</label>
-              <input type="text" id="journal-edit-title" class="journal-inputs"/>
-            </div>
-            <div class="form-group">
-              <label for="journal-content">Content</label>
-              <textarea id="journal-edit-content" rows="4"  class="journal-inputs"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="mood">Mood:</label>
-              <select id="journal-edit-mood" class="journal-inputs">
-                <option value="happy">Happy</option>
-                <option value="sad">Sad</option>
-                <option value="motivated">Motivated</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="journal-date">Date:</label>
-              <input type="date" id="journal-edit-date" class="journal-inputs"/>
-            </div>
-  
-            <div class="journal-btn-div">
-              <button type="submit" id="edit-journal-btn">Edit Journal</button>
-            </div>
-          </form>
+    <!-- Edit Journal Modal -->
+    <div id="edit-journal-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Journal</h2>
+          <span id="close-edit-modal">&times;</span>
         </div>
+        <form>
+          <div class="form-group">
+            <label for="journal-title">Title</label>
+            <input type="text" id="journal-edit-title" class="journal-inputs" />
+          </div>
+          <div class="form-group">
+            <label for="journal-content">Content</label>
+            <textarea
+              id="journal-edit-content"
+              rows="4"
+              class="journal-inputs"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="mood">Mood:</label>
+            <select id="journal-edit-mood" class="journal-inputs">
+              <option value="happy">Happy</option>
+              <option value="sad">Sad</option>
+              <option value="motivated">Motivated</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="journal-date">Date:</label>
+            <input type="date" id="journal-edit-date" class="journal-inputs" />
+          </div>
+
+          <div class="journal-btn-div">
+            <button type="submit" id="edit-journal-btn">Save Journal</button>
+          </div>
+        </form>
       </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="./js/ui.js" type="module" defer></script>
+    <script src="./js/journal.js" type="module" defer></script>
+    <script src="./js/storage.js" type="module" defer></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
