@@ -13,6 +13,7 @@ export function showAddModalEventListener() {
 export function closeAddModalEventListener() {
   const addJournalModal = document.getElementById('add-journal-modal')
   addJournalModal.style.display = 'none'
+  document.getElementById('add-journal-error').style.display = 'none'
 }
 
 // event listener to add a journal to the list
@@ -22,7 +23,7 @@ export function addJournalEventListener(e) {
   const journalContent = document.getElementById('journal-content').value
   const journalMood = document.getElementById('journal-mood').value
   const journalDate = document.getElementById('journal-date').value
-  if(!journalTitle || !journalContent || !journalMood || !journalDate){
+  if (!journalTitle || !journalContent || !journalMood || !journalDate) {
     document.getElementById('add-journal-error').style.display = 'block'
     return
   }
@@ -38,6 +39,11 @@ export function addJournalEventListener(e) {
   storeJournals(journals)
   closeAddModalEventListener()
   loadJournal()
+  document.getElementById('journal-title').value = ''
+  document.getElementById('journal-content').value = ''
+  document.getElementById('journal-mood').value = ''
+  document.getElementById('journal-date').value = ''
+  document.getElementById('add-journal-error').style.display = 'none'
 }
 
 //handler to show the form to edit journal
