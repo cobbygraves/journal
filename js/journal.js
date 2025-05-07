@@ -62,157 +62,22 @@ export function loadJournal() {
 
 loadJournal()
 
-export function loadHappy() {
-  var journals = JSON.parse(localStorage.getItem('happy'))
+//event listener to search journal
+export function loadSearch(text) {
+  var journals = JSON.parse(localStorage.getItem('journals') || '[]')
   var journalList = document.getElementById('journal-container')
-  if (!journals || journals.length === 0) {
-    journalList.innerHTML = `<p style="text-align: center;">...No happy entry added yet...</p>`
-    return
-  }
-  journalList.innerHTML = ''
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
-    journalList.innerHTML += `
-                <div class="journal-card">
-                <div class="card-header">
-                    <small>Date: <span>${moment(journal.date).format(
-                      'DD/MM/YYYY'
-                    )}</span></small>
-                    <small>Mood: <span>${journal.mood}</span></small>
-                </div>
-                <h3>${journal.title}</h3>
-                <p>${journal.content}</p>
-                <div class="card-footer">
-                    <button class="edit-journal" id="edit-${journal.id}">
-                        Edit<ion-icon name="create-outline"></ion-icon>
-                    </button>
-                    <button class="delete-journal" id="delete-${journal.id}">
-                        Delete<ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                </div>
-            </div>
-            `
-  }
-
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
-    document
-      .getElementById(`edit-${journal.id}`)
-      .addEventListener('click', (event) =>
-        showEditModalHandler(event.target.id)
-      )
-    document
-      .getElementById(`delete-${journal.id}`)
-      .addEventListener('click', (event) =>
-        deleteJournalHandler(event.target.id)
-      )
-  }
-}
-
-export function loadSad() {
-  var journals = JSON.parse(localStorage.getItem('sad'))
-  var journalList = document.getElementById('journal-container')
-  if (!journals || journals.length === 0) {
-    journalList.innerHTML = `<p style="text-align: center;">...No sad entry added yet...</p>`
-    return
-  }
-  journalList.innerHTML = ''
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
-    journalList.innerHTML += `
-                <div class="journal-card">
-                <div class="card-header">
-                    <small>Date: <span>${moment(journal.date).format(
-                      'DD/MM/YYYY'
-                    )}</span></small>
-                    <small>Mood: <span>${journal.mood}</span></small>
-                </div>
-                <h3>${journal.title}</h3>
-                <p>${journal.content}</p>
-                <div class="card-footer">
-                    <button class="edit-journal" id="edit-${journal.id}">
-                        Edit<ion-icon name="create-outline"></ion-icon>
-                    </button>
-                    <button class="delete-journal" id="delete-${journal.id}">
-                        Delete<ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                </div>
-            </div>
-            `
-  }
-
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
-    document
-      .getElementById(`edit-${journal.id}`)
-      .addEventListener('click', (event) =>
-        showEditModalHandler(event.target.id)
-      )
-    document
-      .getElementById(`delete-${journal.id}`)
-      .addEventListener('click', (event) =>
-        deleteJournalHandler(event.target.id)
-      )
-  }
-}
-
-export function loadMotivated() {
-  var journals = JSON.parse(localStorage.getItem('motivated'))
-  var journalList = document.getElementById('journal-container')
-  if (!journals || journals.length === 0) {
-    journalList.innerHTML = `<p style="text-align: center;">...No motivated entry added yet...</p>`
-    return
-  }
-  journalList.innerHTML = ''
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
-    journalList.innerHTML += `
-                <div class="journal-card">
-                <div class="card-header">
-                    <small>Date: <span>${moment(journal.date).format(
-                      'DD/MM/YYYY'
-                    )}</span></small>
-                    <small>Mood: <span>${journal.mood}</span></small>
-                </div>
-                <h3>${journal.title}</h3>
-                <p>${journal.content}</p>
-                <div class="card-footer">
-                    <button class="edit-journal" id="edit-${journal.id}">
-                        Edit<ion-icon name="create-outline"></ion-icon>
-                    </button>
-                    <button class="delete-journal" id="delete-${journal.id}">
-                        Delete<ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                </div>
-            </div>
-            `
-  }
-
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
-    document
-      .getElementById(`edit-${journal.id}`)
-      .addEventListener('click', (event) =>
-        showEditModalHandler(event.target.id)
-      )
-    document
-      .getElementById(`delete-${journal.id}`)
-      .addEventListener('click', (event) =>
-        deleteJournalHandler(event.target.id)
-      )
-  }
-}
-
-export function loadSearch() {
-  var journals = JSON.parse(localStorage.getItem('search'))
-  var journalList = document.getElementById('journal-container')
-  if (!journals || journals.length === 0) {
+  var filteredJournals = journals.filter(
+    (journal) =>
+      journal.title.toLowerCase().includes(text.toLowerCase()) ||
+      journal.content.toLowerCase().includes(text.toLowerCase())
+  )
+  if (!filteredJournals || filteredJournals.length === 0) {
     journalList.innerHTML = `<p style="text-align: center;">...Search result not found...</p>`
     return
   }
   journalList.innerHTML = ''
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
+  for (let i = 0; i < filteredJournals.length; i++) {
+    var journal = filteredJournals[i]
     journalList.innerHTML += `
                 <div class="journal-card">
                 <div class="card-header">
@@ -235,8 +100,59 @@ export function loadSearch() {
             `
   }
 
-  for (let i = 0; i < journals.length; i++) {
-    var journal = journals[i]
+  for (let i = 0; i < filteredJournals.length; i++) {
+    var journal = filteredJournals[i]
+    document
+      .getElementById(`edit-${journal.id}`)
+      .addEventListener('click', (event) =>
+        showEditModalHandler(event.target.id)
+      )
+    document
+      .getElementById(`delete-${journal.id}`)
+      .addEventListener('click', (event) =>
+        deleteJournalHandler(event.target.id)
+      )
+  }
+}
+
+//event listener to filtered journal
+export const loadFilter = (moodFilter) => {
+  var journals = JSON.parse(localStorage.getItem('journals') || '[]')
+  var filteredJournals = journals.filter(
+    (journal) => journal.mood === moodFilter
+  )
+  var journalList = document.getElementById('journal-container')
+  if (!filteredJournals || filteredJournals.length === 0) {
+    journalList.innerHTML = `<p style="text-align: center;">...No ${moodFilter} entry added yet...</p>`
+    return
+  }
+  journalList.innerHTML = ''
+  for (let i = 0; i < filteredJournals.length; i++) {
+    var journal = filteredJournals[i]
+    journalList.innerHTML += `
+                <div class="journal-card">
+                <div class="card-header">
+                    <small>Date: <span>${moment(journal.date).format(
+                      'DD/MM/YYYY'
+                    )}</span></small>
+                    <small>Mood: <span>${journal.mood}</span></small>
+                </div>
+                <h3>${journal.title}</h3>
+                <p>${journal.content}</p>
+                <div class="card-footer">
+                    <button class="edit-journal" id="edit-${journal.id}">
+                        Edit<ion-icon name="create-outline"></ion-icon>
+                    </button>
+                    <button class="delete-journal" id="delete-${journal.id}">
+                        Delete<ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                </div>
+            </div>
+            `
+  }
+
+  for (let i = 0; i < filteredJournals.length; i++) {
+    var journal = filteredJournals[i]
     document
       .getElementById(`edit-${journal.id}`)
       .addEventListener('click', (event) =>
