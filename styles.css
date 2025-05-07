@@ -136,7 +136,14 @@ header .filter {
 .journal-btn-div {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.journal-btn-div span{
+  color: red;
+  font-size: small;
+  display: none;
 }
 
 .journal-btn-div button {

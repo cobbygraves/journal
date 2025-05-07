@@ -16,11 +16,16 @@ export function closeAddModalEventListener() {
 }
 
 // event listener to add a journal to the list
-export function addJournalEventListener() {
+export function addJournalEventListener(e) {
+  e.preventDefault()
   const journalTitle = document.getElementById('journal-title').value
   const journalContent = document.getElementById('journal-content').value
   const journalMood = document.getElementById('journal-mood').value
   const journalDate = document.getElementById('journal-date').value
+  if(!journalTitle || !journalContent || !journalMood || !journalDate){
+    document.getElementById('add-journal-error').style.display = 'block'
+    return
+  }
   const journal = {
     id: Date.now().toString(),
     title: journalTitle,
