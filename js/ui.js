@@ -1,11 +1,14 @@
 import { loadJournal, loadFilter, loadSearch } from './journal.js'
 import { getJournals, storeJournals } from './storage.js'
+const moment = window.moment
 
 // event listener to show the form to add journal
 export function showAddModalEventListener() {
   const addJournalModal = document.getElementById('add-journal-modal')
-  const currentDate = moment().format('YYYY-MM-DD')
-  document.getElementById('journal-date').setAttribute('max', currentDate)
+  if(moment){
+    const currentDate = moment().format('YYYY-MM-DD')
+    document.getElementById('journal-date').setAttribute('max', currentDate)
+  }
   addJournalModal.style.display = 'block'
 }
 
