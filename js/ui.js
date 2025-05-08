@@ -5,7 +5,7 @@ const moment = window.moment
 // event listener to show the form to add journal
 export function showAddModalEventListener() {
   const addJournalModal = document.getElementById('add-journal-modal')
-  if(moment){
+  if (moment) {
     const currentDate = moment().format('YYYY-MM-DD')
     document.getElementById('journal-date').setAttribute('max', currentDate)
   }
@@ -66,6 +66,7 @@ export function showEditModalHandler(id) {
 export function closeEditModalEventListener() {
   const editJournalModal = document.getElementById('edit-journal-modal')
   editJournalModal.style.display = 'none'
+   document.getElementById('edit-journal-error').style.display = 'none'
 }
 
 // handler to delete a journal
@@ -77,12 +78,17 @@ export function deleteJournalHandler(id) {
 }
 
 // event listener to edit a journal
-export function editJournalEventListener() {
+export function editJournalEventListener(e) {
+  e.preventDefault()
   const journalID = localStorage.getItem('journalID')
   const journalTitle = document.getElementById('journal-edit-title').value
   const journalContent = document.getElementById('journal-edit-content').value
   const journalMood = document.getElementById('journal-edit-mood').value
   const journalDate = document.getElementById('journal-edit-date').value
+  if (!journalTitle || !journalContent || !journalMood || !journalDate) {
+    document.getElementById('edit-journal-error').style.display = 'block'
+    return
+  }
   const journal = {
     id: journalID,
     title: journalTitle,
