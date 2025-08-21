@@ -29,8 +29,9 @@ CloudFront is AWS's CDN (Content Delivery Network) used in front of the S3 origi
 - HTTPS by default, support for custom domains and AWS Certificate Manager (ACM).
 - Security features (WAF integration, geo restrictions, origin access controls) and cache invalidation for deployments.
 
-### Why use S3 + CloudFront together
+### Why use S3 + CloudFront together + S3 Sync
 
 - S3 provides durable storage for your static site; CloudFront caches that content at edge locations close to users to improve performance and reduce costs.
 - CloudFront enables HTTPS and custom domain support for production traffic, and can restrict direct access to S3 using an Origin Access Control so assets are only served via CloudFront (improves security).
 - This combination is a standard best-practice for fast, secure, and cost-effective static site hosting on AWS.
+- S3 Sync is used to implement a CI/CD between the github repo and the S3 bucket to avoid manual update to s3 bucket.
